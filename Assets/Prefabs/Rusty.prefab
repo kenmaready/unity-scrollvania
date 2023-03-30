@@ -15,7 +15,8 @@ GameObject:
   - component: {fileID: 1001534341185119311}
   - component: {fileID: 8737963813455041413}
   - component: {fileID: -6961342318064493776}
-  m_Layer: 0
+  - component: {fileID: 2841936615362475832}
+  m_Layer: 8
   m_Name: Rusty
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +97,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1637571719
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 1502704557, guid: 83c2640121d004ba289656ba8a52cc6d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -160,11 +161,11 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 5071135794044845364}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: e32e7b7e20e6841dab08f8e1c3e9130a, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.017988205, y: 0}
+  m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.640255, y: 1}
   m_Direction: 0
 --- !u!50 &-6961342318064493776
@@ -188,3 +189,29 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!61 &2841936615362475832
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5071135794044845364}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.004497528, y: 0.45394897}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.39772797, y: 0.09210205}
+  m_EdgeRadius: 0

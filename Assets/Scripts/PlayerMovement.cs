@@ -5,7 +5,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerClass {
     public Rigidbody2D rigidbody;
-    public CapsuleCollider2D collider;
+    public CapsuleCollider2D bodyCollider;
+    public BoxCollider2D footCollider;
     public Animator animator;
     public float defaultGravity;
 }
@@ -20,7 +21,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Awake() {
         player.rigidbody = GetComponent<Rigidbody2D>();
-        player.collider = GetComponent<CapsuleCollider2D>();
+        player.bodyCollider = GetComponent<CapsuleCollider2D>();
+        player.footCollider = GetComponent<BoxCollider2D>();
         player.animator = GetComponent<Animator>();
         player.defaultGravity = player.rigidbody.gravityScale;
     }
@@ -88,18 +90,18 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private bool IsTouchingGround() {
-        bool isTouching = player.collider.IsTouchingLayers(LayerMask.GetMask("Ground"));
+        bool isTouching = player.footCollider.IsTouchingLayers(LayerMask.GetMask("Ground"));
         Debug.Log("isTouching Ground: " + isTouching);
         return isTouching;
     }
 
     private bool IsTouchingLadder() {
-        bool isTouching = player.collider.IsTouchingLayers(LayerMask.GetMask("Ladder"));
+        bool isTouching = player.bodyCollider.IsTouchingLayers(LayerMask.GetMask("Ladder"));
         // Debug.Log("isTouching Ladder: " + isTouching);
         return isTouching;
     }
 
     private bool IsTouchingBouncingObject() {
-        return player.collider.IsTouchingLayers(LayerMask.GetMask("Bouncing"));
+        return player.bodyCollider.IsTouchingLayers(LayerMask.GetMask("Bouncing"));
     }
 }
