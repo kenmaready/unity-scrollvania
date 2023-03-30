@@ -37,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void OnJump(InputValue value) {
-        if (value.isPressed && IsTouchingGround()) {
+        if (value.isPressed && (IsTouchingGround() || IsTouchingBouncingObject())) {
             player.rigidbody.velocity += new Vector2(0f, jumpSpeed);
             Debug.Log("Jumping!");
         }
@@ -97,5 +97,9 @@ public class PlayerMovement : MonoBehaviour
         bool isTouching = player.collider.IsTouchingLayers(LayerMask.GetMask("Ladder"));
         // Debug.Log("isTouching Ladder: " + isTouching);
         return isTouching;
+    }
+
+    private bool IsTouchingBouncingObject() {
+        return player.collider.IsTouchingLayers(LayerMask.GetMask("Bouncing"));
     }
 }
