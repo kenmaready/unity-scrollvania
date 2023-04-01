@@ -9,6 +9,7 @@ public class PlayerClass {
     public BoxCollider2D footCollider;
     public Animator animator;
     public float defaultGravity;
+    public bool climbingThroughPlatform = false;
 }
 
 public class PlayerMovement : MonoBehaviour
@@ -20,8 +21,9 @@ public class PlayerMovement : MonoBehaviour
     Vector2 moveInput;
     bool isAlive = true;
     float runSpeed = 4.0f;
-    float jumpSpeed = 7.0f;
+    float jumpSpeed = 10.0f;
     float climbSpeed = 2.0f;
+    GameObject currentPlatform;
 
     void Awake() {
         player.rigidbody = GetComponent<Rigidbody2D>();
@@ -64,7 +66,17 @@ public class PlayerMovement : MonoBehaviour
     private void OnFire(InputValue value) {
         if (!isAlive) { return; }
         player.animator.SetTrigger("Fire");
-        Instantiate(arrow, bow.position, transform.rotation);
+        Vector3 rotation = transform.rotation.eulerAngles;
+        if (transform.localScale.x == -1) {
+            rotation = new Vector3(rotation.x, rotation.y, rotation.z + 180);
+        }
+        Instantiate(arrow, bow.position, Quaternion.Euler(rotation));
+    }
+
+    private void OnRoll(InputValue vlue) {
+        if (!isAlive) { return; }
+
+        player.animator.SetTrigger("Roll");
     }
 
     private void Run() {
@@ -84,8 +96,14 @@ public class PlayerMovement : MonoBehaviour
             }
         } else {
             player.rigidbody.gravityScale = player.defaultGravity;
+            if (currentPlatform) {
+                Physics2D.IgnoreCollision(currentPlatform.GetComponent<CompositeCollider2D>(), player.bodyCollider, false);
+                Physics2D.IgnoreCollision(currentPlatform.GetComponent<CompositeCollider2D>(), player.footCollider, false);
+            }
         }
     }
+
+
 
     private void Die() {
         if (isAlive && player.bodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemies", "Hazards"))) {
@@ -136,5 +154,13 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsTouchingBouncingObject() {
         return player.bodyCollider.IsTouchingLayers(LayerMask.GetMask("Bouncing"));
+    }
+
+    private void OnCollisionEnter2D(Collision2D other) {
+        if (other.gameObject.tag == "Platform" && IsClimbing()) {
+            currentPlatform = other.gameObject;
+            Physics2D.IgnoreCollision(other.gameObject.GetComponent<CompositeCollider2D>(), player.bodyCollider, true);
+            Physics2D.IgnoreCollision(other.gameObject.GetComponent<CompositeCollider2D>(), player.footCollider, true);
+        }
     }
 }

@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 2841936615362475832}
   m_Layer: 8
   m_Name: Rusty
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -153,6 +153,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 078f3a41f4e97433f909df397c59d9bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  arrow: {fileID: 0}
+  bow: {fileID: 0}
 --- !u!70 &8737963813455041413
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
