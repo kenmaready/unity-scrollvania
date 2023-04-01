@@ -13,8 +13,12 @@ public class PlayerClass {
 
 public class PlayerMovement : MonoBehaviour
 {
+    
+    [SerializeField] GameObject arrow;
+    [SerializeField] Transform bow;
     PlayerClass player = new PlayerClass();
     Vector2 moveInput;
+    bool isAlive = true;
     float runSpeed = 4.0f;
     float jumpSpeed = 7.0f;
     float climbSpeed = 2.0f;
@@ -28,21 +32,39 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void Update() {
+        if (!isAlive) {
+            return;
+        }
+
         UpdatePlayerAnimatorState();
         Run();
         Climb();
         FlipSprite();
+        Die();
     }
 
     private void OnMove(InputValue value) {
+        if (!isAlive) {
+            return;
+        }
+
         moveInput = value.Get<Vector2>();
     }
 
     private void OnJump(InputValue value) {
+        if (!isAlive) {
+            return;
+        }
         if (value.isPressed && (IsTouchingGround() || IsTouchingBouncingObject())) {
             player.rigidbody.velocity += new Vector2(0f, jumpSpeed);
             Debug.Log("Jumping!");
         }
+    }
+
+    private void OnFire(InputValue value) {
+        if (!isAlive) { return; }
+        player.animator.SetTrigger("Fire");
+        Instantiate(arrow, bow.position, transform.rotation);
     }
 
     private void Run() {
@@ -65,6 +87,16 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void Die() {
+        if (isAlive && player.bodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemies", "Hazards"))) {
+            isAlive = false;
+            player.animator.SetTrigger("Dying");
+            CinemachineShake.Instance.ShakeCamera(15.0f, 0.1f);
+            player.rigidbody.velocity += new Vector2(0f, jumpSpeed);
+            player.rigidbody.velocity += new Vector2(0f, 0f);
+        }
+    }
+
     private void FlipSprite() {
         if (IsRunning()) {
             transform.localScale = new Vector2(Mathf.Sign(moveInput.x),1f);
@@ -77,7 +109,8 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private bool IsRunning() {
-        return Mathf.Abs(player.rigidbody.velocity.x) > Mathf.Epsilon;
+        float myEpsilon = 0.00005f;
+        return Mathf.Abs(player.rigidbody.velocity.x) > myEpsilon;
     }
 
     private bool IsClimbing() {
@@ -96,7 +129,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private bool IsTouchingLadder() {
-        bool isTouching = player.bodyCollider.IsTouchingLayers(LayerMask.GetMask("Ladder"));
+        bool isTouching = player.footCollider.IsTouchingLayers(LayerMask.GetMask("Ladder"));
         // Debug.Log("isTouching Ladder: " + isTouching);
         return isTouching;
     }
