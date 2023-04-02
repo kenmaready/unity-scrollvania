@@ -112,6 +112,7 @@ public class PlayerMovement : MonoBehaviour
             CinemachineShake.Instance.ShakeCamera(15.0f, 0.1f);
             player.rigidbody.velocity += new Vector2(0f, jumpSpeed);
             player.rigidbody.velocity += new Vector2(0f, 0f);
+            FindObjectOfType<GameSession>().ProcessPlayerDeath();
         }
     }
 
