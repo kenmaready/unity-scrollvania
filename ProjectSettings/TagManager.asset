@@ -22,7 +22,7 @@ TagManager:
   - Hazards
   - Bullet
   - ClimbingPlayer
-  - 
+  - Exit
   - 
   - 
   - 
@@ -51,6 +51,9 @@ TagManager:
     locked: 0
   - name: Platforms
     uniqueID: 2259198127
+    locked: 0
+  - name: Exit
+    uniqueID: 2523076957
     locked: 0
   - name: Ladder
     uniqueID: 3182956289
