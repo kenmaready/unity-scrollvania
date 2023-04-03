@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameSession : MonoBehaviour
 {
     int lives = 3;
+    int coins = 0;
 
     void Awake() {
         int numSessions = FindObjectsOfType<GameSession>().Length;
@@ -23,6 +24,11 @@ public class GameSession : MonoBehaviour
         } else {
             ResetGameSession();
         }
+    }
+
+    public void AddCoin() {
+        coins++;
+        Debug.Log("Another coin! Player now has: " + coins + " coins.");
     }
 
     private void ResetLevel() {

@@ -23,7 +23,7 @@ TagManager:
   - Bullet
   - ClimbingPlayer
   - Exit
-  - 
+  - Coins
   - 
   - 
   - 
@@ -66,4 +66,7 @@ TagManager:
     locked: 0
   - name: Hazards
     uniqueID: 680231059
+    locked: 0
+  - name: Coins
+    uniqueID: 3279309685
     locked: 0
