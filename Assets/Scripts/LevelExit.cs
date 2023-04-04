@@ -6,9 +6,11 @@ using UnityEngine.SceneManagement;
 public class LevelExit : MonoBehaviour
 {
     float levelLoadDelay = 1f;
+    private bool portalTriggered = false;
 
     private void OnTriggerEnter2D(Collider2D other) {
-        if (other.tag == "Player") {
+        if (other.tag == "Player" && !portalTriggered) {
+            portalTriggered = true;
             StartCoroutine(LoadNextLevel());
         }
     }
@@ -23,6 +25,9 @@ public class LevelExit : MonoBehaviour
             nextSceneIndex = 0;
         }
 
+        Debug.Log("No. of ScenePersists: " + FindObjectsOfType<ScenePersist>().Length);
+
+        FindObjectOfType<ScenePersist>().Reset();
         SceneManager.LoadScene(nextSceneIndex);
     }
 }
