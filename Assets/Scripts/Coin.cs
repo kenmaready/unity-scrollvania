@@ -6,7 +6,7 @@ public class Coin : MonoBehaviour
 {
     [SerializeField] AudioClip sound;
     private bool hasBeenTriggered;
-    private int value = 100;
+    protected int value = 100;
 
     private void OnTriggerEnter2D(Collider2D other) {
 

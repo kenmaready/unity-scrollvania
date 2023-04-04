@@ -7,15 +7,10 @@ public class GrommetMovement : MonoBehaviour
 
     Rigidbody2D rb;
     float moveSpeed = 1f;
+    [SerializeField] int hitPoints = 1;
 
-    void Awake() {
+    protected void Awake() {
         rb = GetComponent<Rigidbody2D>();
-    }
-
-
-    void Start()
-    {
-        
     }
 
     void Update()
@@ -32,5 +27,17 @@ public class GrommetMovement : MonoBehaviour
 
     private void FlipSprite() {
         transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
+    }
+
+    public void TakeHit() {
+        hitPoints --;
+        Debug.Log("I got shot! " + hitPoints.ToString() + " hit points left.");
+        if (hitPoints < 1) { 
+            Destroy(gameObject); 
+        } else {
+            Color currentColor = GetComponent<SpriteRenderer>().color;
+            currentColor.a = currentColor.a - 0.1f;
+            GetComponent<SpriteRenderer>().color = currentColor;
+        }
     }
 }

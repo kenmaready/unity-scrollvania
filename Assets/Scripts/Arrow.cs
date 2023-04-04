@@ -22,7 +22,7 @@ public class Arrow : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.tag == "Enemy") {
-            Destroy(other.gameObject);
+            other.GetComponent<GrommetMovement>().TakeHit();
         }
         Destroy(gameObject);
     }
@@ -31,7 +31,7 @@ public class Arrow : MonoBehaviour
         if (other.gameObject.tag == "Player") { return; }
 
         if (other.gameObject.tag == "Enemy") {
-            Destroy(other.gameObject);
+            other.gameObject.GetComponent<GrommetMovement>().TakeHit();
         }
         Destroy(gameObject);
     }

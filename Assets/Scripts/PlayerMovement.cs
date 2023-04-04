@@ -17,6 +17,10 @@ public class PlayerMovement : MonoBehaviour
     
     [SerializeField] GameObject arrow;
     [SerializeField] Transform bow;
+    [SerializeField] AudioClip bowstringSFX;
+    [SerializeField] AudioClip arrowSFX;
+    [SerializeField] AudioClip jumpSFX;
+    [SerializeField] AudioClip bounceSFX;
     PlayerClass player = new PlayerClass();
     Vector2 moveInput;
     bool isAlive = true;
@@ -58,6 +62,11 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
         if (value.isPressed && (IsTouchingGround() || IsTouchingBouncingObject())) {
+            if (IsTouchingBouncingObject()) {
+                AudioSource.PlayClipAtPoint(jumpSFX, Camera.main.transform.position);
+            } else {
+                AudioSource.PlayClipAtPoint(jumpSFX, Camera.main.transform.position);
+            }
             player.rigidbody.velocity += new Vector2(0f, jumpSpeed);
             Debug.Log("Jumping!");
         }
@@ -66,6 +75,8 @@ public class PlayerMovement : MonoBehaviour
     private void OnFire(InputValue value) {
         if (!isAlive) { return; }
         player.animator.SetTrigger("Fire");
+        // AudioSource.PlayClipAtPoint(bowstringSFX, Camera.main.transform.position);
+        AudioSource.PlayClipAtPoint(arrowSFX, Camera.main.transform.position);
         Vector3 rotation = transform.rotation.eulerAngles;
         if (transform.localScale.x == -1) {
             rotation = new Vector3(rotation.x, rotation.y, rotation.z + 180);
